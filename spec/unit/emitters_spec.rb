@@ -103,13 +103,13 @@ describe SnowplowTracker::Emitter, 'Sending requests' do
     expect(sent['schema']).to eq("iglu:com.snowplowanalytics.snowplow/payload_data/jsonschema/1-0-4")
 
     expect(sent['data'][0]['key1']).to eq("value1")
-    expect(sent['data'][0]['stm'].to_i.round(-4)).to eq((Time.now.to_f * 1000).to_i.round(-4)) 
+    expect(sent['data'][0]['stm'].to_i.round(-4)).to eq((Time.now.to_f * 1000).to_i.round(-4))
 
-    expect(sent['data'][1]['key2']).to eq("value2") 
-    expect(sent['data'][1]['stm'].to_i.round(-4)).to eq((Time.now.to_f * 1000).to_i.round(-4)) 
+    expect(sent['data'][1]['key2']).to eq("value2")
+    expect(sent['data'][1]['stm'].to_i.round(-4)).to eq((Time.now.to_f * 1000).to_i.round(-4))
 
-    expect(sent['data'][2]['key3']).to eq("value3") 
-    expect(sent['data'][2]['stm'].to_i.round(-4)).to eq((Time.now.to_f * 1000).to_i.round(-4)) 
+    expect(sent['data'][2]['key3']).to eq("value3")
+    expect(sent['data'][2]['stm'].to_i.round(-4)).to eq((Time.now.to_f * 1000).to_i.round(-4))
   end
 
 end

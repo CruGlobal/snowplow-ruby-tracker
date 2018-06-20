@@ -141,7 +141,7 @@ module SnowplowTracker
         tstamp = get_timestamp
       end
 
-      track_page_view(page_url, page_title, referrer, context, DeviceTimestamp.new(tstamp))  
+      track_page_view(page_url, page_title, referrer, context, DeviceTimestamp.new(tstamp))
     end
 
     # Log a visit to this page
@@ -191,10 +191,10 @@ module SnowplowTracker
     # Track an ecommerce transaction and all the items in it
     # Set the timestamp as the device timestamp
     Contract @@Transaction, ArrayOf[@@Item], Maybe[@@ContextsInput], Maybe[Num] => Tracker
-    def track_ecommerce_transaction(transaction, 
+    def track_ecommerce_transaction(transaction,
                                     items,
                                     context=nil,
-                                    tstamp=nil)      
+                                    tstamp=nil)
       if tstamp.nil?
         tstamp = get_timestamp
       end
@@ -272,10 +272,10 @@ module SnowplowTracker
     Contract Maybe[String], Maybe[String],  Maybe[@@ContextsInput], Or[Timestamp, Num, nil] => Tracker
     def track_screen_view(name=nil, id=nil, context=nil, tstamp=nil)
       screen_view_properties = {}
-      unless name.nil? 
+      unless name.nil?
         screen_view_properties['name'] = name
       end
-      unless id.nil? 
+      unless id.nil?
         screen_view_properties['id'] = id
       end
       screen_view_schema = "#{@@base_schema_path}/screen_view/#{@@schema_tag}/1-0-0"
@@ -318,7 +318,7 @@ module SnowplowTracker
     def track_unstruct_event(event_json, context=nil, tstamp=nil)
       pb = Payload.new
       pb.add('e', 'ue')
-      
+
       envelope = SelfDescribingJson.new(@@unstruct_event_schema, event_json.to_json)
 
       pb.add_json(envelope.to_json, @config['encode_base64'], 'ue_px', 'ue_pr')

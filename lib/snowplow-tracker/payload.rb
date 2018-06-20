@@ -40,7 +40,7 @@ module SnowplowTracker
         @context[name] = value
       end
     end
-    
+
     # Add each name-value pair in dict to @context
     #
     Contract Hash => Hash
@@ -54,11 +54,11 @@ module SnowplowTracker
     #
     Contract Maybe[Hash], Bool, String, String => Maybe[String]
     def add_json(dict, encode_base64, type_when_encoded, type_when_not_encoded)
-      
+
       if dict.nil?
         return
       end
-      
+
       dict_string = JSON.generate(dict)
 
       if encode_base64

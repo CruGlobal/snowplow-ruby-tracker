@@ -29,7 +29,7 @@ module SnowplowTracker
 
     class TrueTimestamp < Timestamp
 
-        def initialize(value) 
+        def initialize(value)
             super 'ttm', value
         end
 
@@ -37,7 +37,7 @@ module SnowplowTracker
 
     class DeviceTimestamp < Timestamp
 
-        def initialize(value) 
+        def initialize(value)
             super 'dtm', value
         end
 

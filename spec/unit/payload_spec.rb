@@ -40,14 +40,14 @@ describe SnowplowTracker::Payload, 'context' do
     @pb.context.should eq({
       'p' => 'mob',
       'tna' => 'cf',
-      'aid' => 'cd767ae'      
+      'aid' => 'cd767ae'
       })
   end
 
   it 'turns a JSON into a string and adds it to the context' do
     @pb.add_json({'a' => {'b' => [23, 54]}}, false, 'cx', 'co')
     @pb.context.should eq({
-      'co' => "{\"a\":{\"b\":[23,54]}}" 
+      'co' => "{\"a\":{\"b\":[23,54]}}"
       })
   end
 

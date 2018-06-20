@@ -21,31 +21,31 @@ describe SnowplowTracker::Timestamp do
         SnowplowTracker::Timestamp.new('dtm', 123456).type.should eq("dtm")
     end
 
-    it 'has a value' do 
+    it 'has a value' do
         SnowplowTracker::Timestamp.new('dtm', 123456).value.should eq(123456)
     end
 
 end
 
-describe SnowplowTracker::TrueTimestamp do 
+describe SnowplowTracker::TrueTimestamp do
 
-    it 'has type ttm' do 
+    it 'has type ttm' do
         SnowplowTracker::TrueTimestamp.new(1234).type.should eq('ttm')
     end
 
-    it 'has a value' do 
+    it 'has a value' do
         SnowplowTracker::TrueTimestamp.new(1234).value.should eq(1234)
     end
 
 end
 
-describe SnowplowTracker::DeviceTimestamp do 
+describe SnowplowTracker::DeviceTimestamp do
 
-    it 'has type dtm' do 
+    it 'has type dtm' do
         SnowplowTracker::DeviceTimestamp.new(1234).type.should eq('dtm')
     end
 
-    it 'has a value' do 
+    it 'has a value' do
         SnowplowTracker::DeviceTimestamp.new(1234).value.should eq(1234)
     end
 
