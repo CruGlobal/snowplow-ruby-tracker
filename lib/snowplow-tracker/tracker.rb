@@ -287,6 +287,28 @@ module SnowplowTracker
       self
     end
 
+    # Track a scorable action event
+    #
+    Contract String, String,  @@ContextsInput, Timestamp => Tracker
+    def track_scorable_action(uri, title, context, tstamp)
+      pb = Payload.new
+      pb.add('e', 'se')
+      pb.add('url', uri)
+      pb.add('page', title)
+      pb.add('se_ca', 'k_m')
+      pb.add('se_ac', 'scorable_action')
+      unless context.nil?
+        pb.add_json(build_context(context), @config['encode_base64'], 'cx', 'co')
+      end
+
+      pb.add('dtm', tstamp.value)
+      pb.add('ttm', tstamp.value)
+
+      track(pb)
+
+      self
+    end
+
     # Better name for track unstruct event
     #
     Contract SelfDescribingJson, Maybe[@@ContextsInput], Timestamp => Tracker
