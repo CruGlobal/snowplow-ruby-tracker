@@ -32,7 +32,7 @@ module SnowplowTracker
       return false unless x.class == Hash
       transaction_keys = Set.new(x.keys)
       @@required_transaction_keys.subset? transaction_keys and
-        transaction_keys.subset? @@recognised_transaction_keys
+          transaction_keys.subset? @@recognised_transaction_keys
     }
 
     @@required_item_keys =   Set.new(%w(sku price quantity))
@@ -42,7 +42,7 @@ module SnowplowTracker
       return false unless x.class == Hash
       item_keys = Set.new(x.keys)
       @@required_item_keys.subset? item_keys and
-        item_keys.subset? @@recognised_item_keys
+          item_keys.subset? @@recognised_item_keys
     }
 
     @@required_augmented_item_keys =   Set.new(%w(sku price quantity tstamp order_id))
@@ -52,7 +52,7 @@ module SnowplowTracker
       return false unless x.class == Hash
       augmented_item_keys = Set.new(x.keys)
       @@required_augmented_item_keys.subset? augmented_item_keys and
-        augmented_item_keys.subset? @@recognised_augmented_item_keys
+          augmented_item_keys.subset? @@recognised_augmented_item_keys
     }
 
     @@ContextsInput = ArrayOf[SelfDescribingJson]
@@ -74,12 +74,12 @@ module SnowplowTracker
         @subject = subject
       end
       @standard_nv_pairs = {
-        'tna' => namespace,
-        'tv'  => @@version,
-        'aid' => app_id
+          'tna' => namespace,
+          'tv'  => @@version,
+          'aid' => app_id
       }
       @config = {
-        'encode_base64' => encode_base64
+          'encode_base64' => encode_base64
       }
 
       self
@@ -113,9 +113,9 @@ module SnowplowTracker
     Contract @@ContextsInput => Hash
     def build_context(context)
       SelfDescribingJson.new(
-        @@context_schema,
-        context.map {|c| c.to_json}
-        ).to_json
+          @@context_schema,
+          context.map {|c| c.to_json}
+      ).to_json
     end
 
     # Tracking methods
@@ -288,15 +288,19 @@ module SnowplowTracker
     end
 
     # Track a scorable action event
-    #
-    Contract String, String,  @@ContextsInput, Timestamp => Tracker
-    def track_scorable_action(uri, title, context, tstamp)
+    # https://github.com/snowplow/snowplow/wiki/snowplow-tracker-protocol#39-custom-structured-event-tracking
+    Contract String, String,  @@ContextsInput, Timestamp, Hash => Tracker
+    def track_scorable_action(uri, title, context, tstamp, se={})
       pb = Payload.new
       pb.add('e', 'se')
       pb.add('url', uri)
       pb.add('page', title)
       pb.add('se_ca', 'k_m')
       pb.add('se_ac', 'scorable_action')
+      pb.add('se_la', se[:label]) if se[:label]
+      pb.add('se_pr', se[:property]) if se[:property]
+      pb.add('se_va', se[:value]) if se[:value]
+
       unless context.nil?
         pb.add_json(build_context(context), @config['encode_base64'], 'cx', 'co')
       end
