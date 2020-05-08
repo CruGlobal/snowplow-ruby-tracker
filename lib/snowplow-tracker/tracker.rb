@@ -289,7 +289,7 @@ module SnowplowTracker
 
     # Track a scorable action event
     # https://github.com/snowplow/snowplow/wiki/snowplow-tracker-protocol#39-custom-structured-event-tracking
-    Contract String, String,  @@ContextsInput, Timestamp, Hash => Tracker
+    Contract String, String,  @@ContextsInput, Timestamp, Maybe[Hash] => Tracker
     def track_scorable_action(uri, title, context, tstamp, se={})
       pb = Payload.new
       pb.add('e', 'se')
